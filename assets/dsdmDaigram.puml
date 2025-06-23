@@ -1,0 +1,52 @@
+@startuml
+skinparam style strictuml
+skinparam packageStyle rectangle
+title DSDM Lifecycle Phases for SafePing Project
+
+start
+
+:Pre-Project;
+note right
+  Identified need for an attendance system
+  through stakeholder analysis.
+end note
+
+:Feasibility Study;
+note right
+  Evaluated technical feasibility using
+  web-based tools and stakeholder access.
+end note
+
+:Business Study;
+note right
+  Collected requirements from teachers and parents
+  using interviews and surveys.
+end note
+
+:Functional Model Iteration;
+note right
+  Created use case diagrams, storyboards,
+  and wireframes for feedback.
+end note
+
+:Design and Build Iteration;
+note right
+  Developed attendance module and notification
+  system iteratively using Scrum sprints.
+end note
+
+:Implementation;
+note right
+  Delivered and reviewed working prototype
+  with sample users for testing.
+end note
+
+:Post-Project;
+note right
+  Planned future features like bus tracking
+  and better dashboards.
+end note
+
+stop
+
+@enduml

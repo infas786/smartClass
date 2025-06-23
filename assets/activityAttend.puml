@@ -1,0 +1,19 @@
+@startuml
+start
+
+:Teacher selects class/date;
+:Mark students as present/absent;
+:Click 'Submit';
+
+if (All students marked?) then (Yes)
+  :Send to Attendance Controller;
+  :Save in Student Database;
+  :Trigger Parent Notification Service;
+  :Update Parent Dashboard;
+  :Show "Attendance saved and parents notified";
+else (No)
+  :Prompt to mark all students;
+endif
+
+stop
+@enduml

@@ -1,0 +1,11 @@
+@startuml
+object System
+object "Notification Service" as Service
+object "Parent DB" as DB
+object "Parent Dashboard" as UI
+
+System --> Service : trigger notification
+Service --> DB : get contact list
+DB --> Service : contacts
+Service --> UI : send alert
+@enduml

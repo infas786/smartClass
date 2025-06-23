@@ -1,0 +1,40 @@
+@startuml
+skinparam backgroundColor #F9F9F9
+skinparam handwritten true
+skinparam shadowing false
+
+rectangle "Admin Dashboard" {
+  rectangle "Create Section" {
+    [Create Parent] 
+    [Create Teacher] 
+    [Create Grade]
+  }
+
+  rectangle "Assign Section" {
+    [Assign Teacher to Grade]
+  }
+
+  rectangle "Notifications" {
+    [View Notifications]
+    [Attendance Alert]
+    [Late Arrival Reason]
+    [Sick at School Report]
+    [After School Stay Reason]
+  }
+
+  rectangle "User Info" {
+    [Logout]
+    [Change Password]
+  }
+}
+
+[Create Parent] --> [Create Teacher] : optional
+[Create Teacher] --> [Assign Teacher to Grade]
+[Assign Teacher to Grade] --> [View Notifications]
+
+[Attendance Alert] --> [View Notifications]
+[Late Arrival Reason] --> [View Notifications]
+[Sick at School Report] --> [View Notifications]
+[After School Stay Reason] --> [View Notifications]
+
+@enduml

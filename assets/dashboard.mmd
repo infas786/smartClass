@@ -1,0 +1,46 @@
+%%{init: {'theme': 'default', 'themeVariables': { 'primaryColor': '#E0F7FA', 'edgeLabelBackground':'#ffffff'}}}%%
+flowchart TB
+    subgraph Dashboard["🧑‍💻 Admin Dashboard"]
+        direction TB
+
+        sectionA["📁 Create Section"]
+        createTeacher["🧑‍🏫 Create Teacher"]
+        createParent["👨‍👩‍👧 Create Parent"]
+        createGrade["🏷️ Create Grade"]
+
+        sectionB["📌 Assign Section"]
+        assignTeacher["🔁 Assign Teacher"]
+
+        sectionC["🎉 Special Event Banners"]
+        event1["🎈 School Annual Day"]
+        event2["🏆 Sports Meet"]
+
+        sectionD["🖼️ Recent / Upcoming Activities"]
+        activity1["📸 Science Fair"]
+        activity2["🎨 Art Exhibition"]
+
+        sectionU["⚙️ Admin Settings"]
+        logout["🔓 Logout"]
+        resetPwd["🔑 Reset Password"]
+    end
+
+    %% Connections
+    sectionA --> createTeacher
+    sectionA --> createParent
+    sectionA --> createGrade
+
+    sectionB --> assignTeacher
+
+    sectionC --> event1
+    sectionC --> event2
+
+    sectionD --> activity1
+    sectionD --> activity2
+
+    Dashboard --> sectionA
+    Dashboard --> sectionB
+    Dashboard --> sectionC
+    Dashboard --> sectionD
+    Dashboard --> sectionU
+    sectionU --> logout
+    sectionU --> resetPwd

@@ -1,0 +1,324 @@
+' @startuml
+' ' Classes and Relationships for Online Attendance System
+
+' class Admin {
+'   +createTeacher(teacherDetails)
+'   +createParent(parentDetails, studentDetails)
+' }
+
+' class Teacher {
+'   -teacherID
+'   -name
+'   +markAttendance(studentID, status)
+' }
+
+' class Parent {
+'   -parentID
+'   -name
+'   +viewDashboard()
+' }
+
+' class Student {
+'   -studentID
+'   -name
+'   -attendanceRecords
+' }
+
+' class Attendance {
+'   -attendanceID
+'   -studentID
+'   -date
+'   -status: enum(SIGN_IN, SIGN_OUT, HALF_DAY, AFTER_SCHOOL)
+'   -timestamp
+' }
+
+' class Notification {
+'   -notificationID
+'   -parentID
+'   -message
+'   -timestamp
+'   +sendNotification()
+' }
+
+' Admin "1" --> "0..*" Teacher : creates
+' Admin "1" --> "0..*" Parent : creates
+' Parent "1" --> "1..*" Student : has
+' Teacher "1" --> "0..*" Attendance : marks
+' Student "1" --> "0..*" Attendance : has
+' Attendance "1" --> "0..*" Notification : triggers
+' Parent "1" --> "0..*" Notification : receives
+
+' @enduml
+
+'  @startuml
+' skinparam classAttributeIconSize 0
+' skinparam class {
+'     BackgroundColor #FDF6E3
+'     BorderColor black
+'     ArrowColor #2AA198
+' }
+
+' ' Abstract base class using abstraction
+' abstract class User {
+'   -userID: int
+'   -username: string
+'   -password: string
+'   -email: string
+'   +login(): bool
+'   +logout(): void
+'   +resetPassword(): void
+'   +sendMessage(): void
+'   +viewNotifications(): void
+' }
+
+' ' Subclasses using polymorphism (override methods)
+' class Parent {
+'   +viewAttendance(): void
+'   +trackBus(): void
+'   +viewActivities(): void
+'   +sendMessage(): void
+'   +viewNotifications(): void
+'   +manageChildProfile(): void
+' }
+
+' class Teacher {
+'   +markAttendance(): void
+'   +updateActivity(): void
+'   +sendNotification(): void
+'   +readMessages(): void
+'   +viewStudentList(): void
+'   +sendMessage(): void
+'   +viewNotifications(): void
+' }
+
+' class Admin {
+'   +addUser(): void
+'   +removeUser(): void
+'   +generateReport(): void
+'   +configureSettings(): void
+'   +monitorLogs(): void
+'   +sendMessage(): void
+'   +viewNotifications(): void
+' }
+
+' ' Related entities
+' class Student {
+'   -studentID: int
+'   -name: string
+'   -grade: string
+'   -parentID: int
+' }
+
+' class Attendance {
+'   -attendanceID: int
+'   -studentID: int
+'   -date: Date
+'   -status: string
+'   +recordAttendance(): void
+'   +viewAttendance(): void
+' }
+
+' class Notification {
+'   -notificationID: int
+'   -message: string
+'   -dateSent: Date
+'   -senderID: int
+'   -recipientID: int
+'   +send(): void
+'   +receive(): void
+' }
+
+' class Activity {
+'   -activityID: int
+'   -name: string
+'   -description: string
+'   -date: Date
+'   +updateActivity(): void
+'   +viewActivity(): void
+' }
+
+' class Message {
+'   -messageID: int
+'   -senderID: int
+'   -recipientID: int
+'   -content: string
+'   -timestamp: Date
+'   +sendMessage(): void
+'   +readMessage(): void
+' }
+
+' class Bus {
+'   -busID: int
+'   -route: string
+'   -location: string
+'   +trackLocation(): void
+' }
+
+' class SystemSettings {
+'   -settingID: int
+'   -configKey: string
+'   -configValue: string
+'   +updateSettings(): void
+' }
+
+' ' Inheritance
+' Parent --|> User
+' Teacher --|> User
+' Admin --|> User
+
+' ' Relationships
+' Parent --> Student : "manages >"
+' Teacher --> Attendance : "marks >"
+' Teacher --> Activity : "updates >"
+' Teacher --> Message : "reads >"
+' Parent --> Attendance : "views >"
+' Parent --> Notification : "receives >"
+' Parent --> Activity : "views >"
+' Parent --> Message : "sends >"
+' Parent --> Bus : "tracks >"
+' Admin --> SystemSettings : "configures >"
+' Admin --> Notification : "monitors >"
+' Teacher --> Notification : "sends >"
+' Message --> Notification : "<<related>>"
+' Student --> Attendance : "has >"
+' Student --> Activity : "participates in >"
+' Student --> Message : "relates >"
+' @enduml
+
+@startuml
+skinparam classAttributeIconSize 0
+skinparam class {
+    BackgroundColor #FDF6E3
+    BorderColor black
+    ArrowColor #2AA198
+}
+
+' Abstract base class
+abstract class User {
+  -userID: int
+  -username: string
+  -password: string
+  -email: string
+  +login(): bool
+  +logout(): void
+  +resetPassword(): void
+  +sendMessage(): void
+  +viewNotifications(): void
+}
+
+' Subclasses
+class Parent {
+  +viewAttendance(): void
+  +trackBus(): void
+  +viewActivities(): void
+  +sendMessage(): void
+  +viewNotifications(): void
+  +manageChildProfile(): void
+}
+
+class Teacher {
+  +markAttendance(): void
+  +updateActivity(): void
+  +sendNotification(): void
+  +readMessages(): void
+  +viewStudentList(): void
+  +sendMessage(): void
+  +viewNotifications(): void
+}
+
+class Admin {
+  +addUser(): void
+  +removeUser(): void
+  +generateReport(): void
+  +configureSettings(): void
+  +monitorLogs(): void
+  +sendMessage(): void
+  +viewNotifications(): void
+}
+
+class Student {
+  -studentID: int
+  -name: string
+  -grade: string
+  -parentID: int
+}
+
+class Attendance {
+  -attendanceID: int
+  -studentID: int
+  -date: Date
+  -status: string
+  +recordAttendance(): void
+  +viewAttendance(): void
+}
+
+class Notification {
+  -notificationID: int
+  -message: string
+  -dateSent: Date
+  -senderID: int
+  -recipientID: int
+  +send(): void
+  +receive(): void
+}
+
+class Activity {
+  -activityID: int
+  -name: string
+  -description: string
+  -date: Date
+  +updateActivity(): void
+  +viewActivity(): void
+}
+
+class Message {
+  -messageID: int
+  -senderID: int
+  -recipientID: int
+  -content: string
+  -timestamp: Date
+  +sendMessage(): void
+  +readMessage(): void
+}
+
+class Bus {
+  -busID: int
+  -route: string
+  -location: string
+  +trackLocation(): void
+}
+
+class SystemSettings {
+  -settingID: int
+  -configKey: string
+  -configValue: string
+  +updateSettings(): void
+}
+
+' Inheritance
+Parent --|> User
+Teacher --|> User
+Admin --|> User
+
+' Associations with multiplicity and role names
+Parent "1" -- "1..*" Student : manages
+Parent "1" -- "0..*" Attendance : views
+Parent "1" -- "0..*" Notification : receives
+Parent "1" -- "0..*" Activity : views
+Parent "1" -- "0..*" Message : sends
+Parent "1" -- "0..1" Bus : tracks
+
+Teacher "1" -- "0..*" Attendance : marks
+Teacher "1" -- "0..*" Activity : updates
+Teacher "1" -- "0..*" Message : reads
+Teacher "1" -- "0..*" Notification : sends
+
+Admin "1" -- "1" SystemSettings : configures
+Admin "1" -- "0..*" Notification : monitors
+
+Student "1" -- "0..*" Attendance : has
+Student "1" -- "0..*" Activity : participates in
+Student "1" -- "0..*" Message : relates to
+
+Message "0..*" -- "0..*" Notification : <<related>>
+@enduml

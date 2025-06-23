@@ -1,0 +1,64 @@
+' @startuml
+' ' Sequence Diagram for Marking Attendance and Notifying Parent
+
+' ' Participants
+' actor Teacher
+' participant "System" as System
+' participant "Attendance" as Attendance
+' participant "Notification" as Notification
+' actor Parent
+
+' ' Sequence of Interactions
+' Teacher -> System: markAttendance(studentID, "Sign-In")
+' activate System
+
+' System -> Attendance: createAttendanceRecord(studentID, "Sign-In", timestamp)
+' activate Attendance
+' Attendance -> System: return success
+' deactivate Attendance
+
+' System -> Notification: sendNotification(parentID, "Student Signed In")
+' activate Notification
+' Notification -> Parent: notify("Student Signed In")
+' deactivate Notification
+
+' System -> Teacher: return confirmation
+' deactivate System
+
+' ' Notes (optional)
+' note right of System: System handles attendance recording\nand notification logic
+
+' @enduml
+
+@startuml
+actor Parent
+participant "LoginService" as Login
+participant "Attendance" as Attendance
+participant "Message" as Message
+participant "Teacher" as Teacher
+participant "Student" as Student
+
+== Login Process ==
+Parent -> Login: login(username, password)
+Login --> Parent: loginSuccess / loginFail
+
+== View Attendance ==
+Parent -> Attendance: viewAttendance(studentID)
+Attendance -> Student: getAttendanceRecord()
+Student --> Attendance: attendanceData
+Attendance --> Parent: showAttendance(attendanceData)
+
+== Send Message ==
+Parent -> Message: sendMessage(senderID, recipientID, content)
+Message -> Teacher: notifyNewMessage()
+Teacher --> Message: acknowledgeReceipt
+Message --> Parent: messageSentConfirmation
+
+== Teacher Reads and Responds ==
+Teacher -> Message: readMessage(messageID)
+Message --> Teacher: messageContent
+
+Teacher -> Message: sendMessage(senderID, recipientID, replyContent)
+Message -> Parent: notifyNewMessage()
+Parent --> Message: acknowledgeReceipt
+@enduml

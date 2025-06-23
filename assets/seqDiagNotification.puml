@@ -1,0 +1,11 @@
+@startuml
+actor System
+participant "Notification Service" as Service
+participant "Parent Dashboard" as UI
+participant "Parent DB" as DB
+
+System -> Service : triggerNotification(event)
+Service -> DB : fetchParentContacts()
+DB --> Service : contact list
+Service -> UI : send SMS/Email
+@enduml

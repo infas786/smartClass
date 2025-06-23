@@ -1,0 +1,18 @@
+@startuml
+actor Teacher
+participant "Attendance Page" as UI
+participant "Attendance Controller" as Controller
+participant "Student Database" as DB
+participant "Parent Notification Service" as Notify
+participant "Parent Dashboard" as P_Dashboard
+
+Teacher -> UI : Select class/date
+Teacher -> UI : Mark present/absent
+UI -> Controller : submitAttendance(data)
+Controller -> DB : saveAttendance(data)
+DB --> Controller : confirm save
+Controller -> Notify : sendNotificationToParents(data)
+Notify -> P_Dashboard : updateDashboardView(data)
+Controller -> UI : showConfirmation("Attendance posted & parent notified")
+
+@enduml

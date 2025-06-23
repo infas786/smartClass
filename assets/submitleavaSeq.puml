@@ -1,0 +1,12 @@
+@startuml
+actor Parent
+participant "Leave Request Message" as UI
+participant "Leave Controller" as Controller
+participant "Student DB" as DB
+
+Parent -> UI : MessageToTheTeacher
+UI -> Controller : submitLeaveRequest(data)
+Controller -> DB : saveLeaveRequest(data)
+DB --> Controller : confirmation
+Controller -> UI : show "Request Submitted"
+@enduml

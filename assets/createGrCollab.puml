@@ -1,0 +1,12 @@
+@startuml
+object Admin
+object "Grade Entry Form" as UI
+object "Grade Service" as Service
+object "Grade Database" as DB
+
+Admin --> UI : enters grade Section info
+UI --> Service : passes grade data
+Service --> DB : inserts grade record
+DB --> Service : returns confirmation
+Service --> UI : displays success message
+@enduml

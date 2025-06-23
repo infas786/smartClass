@@ -1,0 +1,7 @@
+@startuml actor Parent participant "System" as Sys participant "Attendance" as Att participant "Notification" as Not
+
+Parent -> Sys: login() Sys -> Sys: authenticate() Sys --> Parent: login_success()
+
+Parent -> Sys: viewAttendance(childID) Sys -> Att: getAttendance(childID) Att --> Sys: attendanceStatus Sys -> Not: sendNotification(parentID, status) Not --> Parent: deliverNotification(SMS/email)
+
+@enduml

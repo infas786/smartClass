@@ -1,0 +1,161 @@
+' ' @startuml
+' left to right direction
+' skinparam packageStyle rectangle
+' skinparam actorStyle awesome
+' skinparam usecase {
+'   BackgroundColor #FDF6E3
+'   BorderColor black
+'   ArrowColor #2AA198
+' }
+
+' actor Parent as P
+' actor Teacher as T
+' actor Admin as A
+
+' rectangle "SafePing System" {
+
+'   ' Common Use Cases
+'   usecase UC_Login as "Login"
+'   usecase UC_Logout as "Logout"
+'   usecase UC_ResetPassword as "Reset Password"
+
+'   ' Parent Use Cases
+'   usecase UC_ViewAttendance as "View Attendance"
+'   usecase UC_Notifications as "Receive Notifications"
+'   usecase UC_ViewActivities as "View After-school Activities"
+'   usecase UC_MessageTeacher as "Send Message to Teacher"
+'   usecase UC_BusTracking as "Track School Bus"
+'   usecase UC_ManageChildProfile as "Manage Child Profile"
+
+'   ' Teacher Use Cases
+'   usecase UC_MarkAttendance as "Mark Attendance"
+'   usecase UC_UpdateActivity as "Update After-school Activity"
+'   usecase UC_StudentList as "View Student List"
+'   usecase UC_NotifyParents as "Send Notification to Parents"
+'   usecase UC_ReadMessages as "View Messages from Parents"
+
+'   ' Admin Use Cases
+'   usecase UC_ManageUsers as "Add/Remove Users"
+'   usecase UC_GenerateReports as "Generate Reports"
+'   usecase UC_ConfigureSettings as "Configure Settings"
+'   usecase UC_SystemLogs as "Monitor System Logs"
+
+'   ' Common use cases
+'   P --> UC_Login
+'   P --> UC_Logout
+'   P --> UC_ResetPassword
+
+'   T --> UC_Login
+'   T --> UC_Logout
+'   T --> UC_ResetPassword
+
+'   A --> UC_Login
+'   A --> UC_Logout
+'   A --> UC_ResetPassword
+
+'   ' Parent-specific
+'   P --> UC_ViewAttendance
+'   P --> UC_Notifications
+'   P --> UC_ViewActivities
+'   P --> UC_MessageTeacher
+'   P --> UC_BusTracking
+'   P --> UC_ManageChildProfile
+
+'   ' Teacher-specific
+'   T --> UC_MarkAttendance
+'   T --> UC_UpdateActivity
+'   T --> UC_StudentList
+'   T --> UC_NotifyParents
+'   T --> UC_ReadMessages
+
+'   ' Admin-specific
+'   A --> UC_ManageUsers
+'   A --> UC_GenerateReports
+'   A --> UC_ConfigureSettings
+'   A --> UC_SystemLogs
+
+'   ' Relationships
+'   UC_Login --> UC_ResetPassword : <<extend>>
+'   UC_NotifyParents --> UC_Notifications : <<include>>
+'   UC_MessageTeacher --> UC_ReadMessages : <<include>>
+'   UC_BusTracking --> UC_Notifications : <<include>>
+' }
+' @enduml
+
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+skinparam actorStyle awesome
+skinparam usecase {
+  BackgroundColor #FDF6E3
+  BorderColor black
+  ArrowColor #2AA198
+}
+
+actor Parent as P
+actor Teacher as T
+actor Admin as A
+
+rectangle "SafePing System" {
+
+  ' General Use Cases
+  usecase "Login" as UC_Login
+  usecase "Logout" as UC_Logout
+  usecase "Reset Password" as UC_ResetPassword
+
+  ' Parent Use Cases
+  usecase "View Attendance" as UC_ViewAttendance
+  usecase "Receive Notifications" as UC_Notifications
+  usecase "View After-school Activities" as UC_ViewActivities
+  usecase "Send Message to Teacher" as UC_MessageTeacher
+  usecase "Track School Bus" as UC_BusTracking
+  usecase "Manage Child Profile" as UC_ManageChildProfile
+
+  ' Teacher Use Cases
+  usecase "Mark Attendance" as UC_MarkAttendance
+  usecase "Update After-school Activity" as UC_UpdateActivity
+  usecase "View Student List" as UC_StudentList
+  usecase "Send Notification to Parents" as UC_NotifyParents
+  usecase "View Messages from Parents" as UC_ReadMessages
+
+  ' Admin Use Cases
+  usecase "Add/Remove Users" as UC_ManageUsers
+  usecase "Generate Reports" as UC_GenerateReports
+  usecase "Configure Settings" as UC_ConfigureSettings
+  usecase "Monitor System Logs" as UC_SystemLogs
+
+  ' Parent Use Case Links
+  P --> UC_Login
+  P --> UC_Logout
+  P --> UC_ViewAttendance
+  P --> UC_Notifications
+  P --> UC_ViewActivities
+  P --> UC_MessageTeacher
+  P --> UC_BusTracking
+  P --> UC_ManageChildProfile
+
+  ' Teacher Use Case Links
+  T --> UC_Login
+  T --> UC_Logout
+  T --> UC_MarkAttendance
+  T --> UC_UpdateActivity
+  T --> UC_StudentList
+  T --> UC_NotifyParents
+  T --> UC_ReadMessages
+
+  ' Admin Use Case Links
+  A --> UC_Login
+  A --> UC_Logout
+  A --> UC_ManageUsers
+  A --> UC_GenerateReports
+  A --> UC_ConfigureSettings
+  A --> UC_SystemLogs
+
+  ' Essential Relationships (with broken lines)
+  UC_Login .up.> UC_ResetPassword : <<extend>>
+  UC_NotifyParents .down.> UC_Notifications : <<include>>
+  UC_MessageTeacher .down.> UC_ReadMessages : <<include>>
+  UC_BusTracking .down.> UC_Notifications : <<include>>
+}
+@enduml
+

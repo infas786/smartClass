@@ -1,0 +1,22 @@
+@startuml
+start
+
+:Enter username and password;
+:Click login button;
+
+if (Are fields empty?) then (Yes)
+  :Show "Fields required" message;
+  stop
+else (No)
+  :Send data to Auth Controller;
+  :Check credentials in database;
+
+  if (Valid credentials?) then (Yes)
+    :Redirect to dashboard;
+  else (No)
+    :Show error "Invalid login";
+  endif
+endif
+
+stop
+@enduml

@@ -1,0 +1,15 @@
+@startuml
+skinparam linetype ortho
+
+object User
+object "Login Page" as UI
+object "Auth Controller" as Controller
+object "User Database" as DB
+
+User --> UI : enters credentials
+UI --> Controller : submitLogin()
+Controller --> DB : validateCredentials()
+DB --> Controller : return result
+Controller --> UI : show dashboard or error
+
+@enduml

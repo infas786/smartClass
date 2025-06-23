@@ -1,0 +1,12 @@
+@startuml
+object Parent
+object "Leave Request Message" as UI
+object "Leave Controller" as Controller
+object "Student DB" as DB
+
+Parent --> UI : send message for leave
+UI --> Controller : sends data
+Controller --> DB : saves leave
+DB --> Controller : confirm
+Controller --> UI : response
+@enduml

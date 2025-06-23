@@ -1,0 +1,10 @@
+@startuml
+start
+:Trigger notification event;
+:Fetch parent contact list;
+:Compose message;
+:Send via email/SMS;
+:Update notification history;
+
+stop
+@enduml

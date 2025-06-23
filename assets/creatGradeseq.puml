@@ -1,0 +1,12 @@
+@startuml
+actor Admin
+participant "Grade Entry Form" as UI
+participant "Grade Service" as Service
+participant "Grade Database" as DB
+
+Admin -> UI : Enter grade info
+UI -> Service : saveGrade(gradeName, section, level)
+Service -> DB : insertGrade()
+DB --> Service : confirm save
+Service -> UI : return success message
+@enduml

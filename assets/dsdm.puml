@@ -1,0 +1,67 @@
+@startuml
+!define RECTANGLE class
+
+start
+:Pre-Project;
+:Identify need for automated
+attendance system;
+
+:Feasibility Study;
+:Evaluate methodologies,
+select Agile with Scrum;
+
+:Business Study;
+:Gather requirements via
+interviews (teachers) and
+surveys (parents);
+note right
+  Functional Requirements:
+  - Daily attendance recording
+  - Parental notifications
+  Non-Functional Requirements:
+  - Usability, Security
+end note
+
+while (Functional Model Iteration) is (Iterate)
+  :Develop prototypes
+  (e.g., Login, Attendance);
+  :Conduct sprint reviews
+  with stakeholders;
+  :Incorporate feedback
+  (teachers, parents);
+  note right
+    Tools: Trello for task tracking
+  end note
+end while (Refined Prototype)
+
+while (Design and Build Iteration) is (Iterate)
+  :Create UML diagrams
+  (Use Case, Class, Sequence);
+  :Implement features
+  (e.g., Notifications, RBAC);
+  :Mitigate risks
+  (e.g., Backups, Scalability);
+  note right
+    Tools: GitHub for version control
+    Risk Mitigation:
+    - Daily backups
+    - Role-Based Access Control
+  end note
+end while (System Ready)
+
+:Implementation;
+:Deploy system,
+train stakeholders;
+
+:Post-Project;
+:Evaluate in real school,
+plan maintenance;
+note right
+  Future Plan:
+  - Collect real-world feedback
+  - Refine based on institutional needs
+end note
+
+stop
+
+@enduml

@@ -1,0 +1,15 @@
+@startuml
+start
+:Parent send message;
+:Click 'Submit';
+
+if (Is data valid?) then (Yes)
+  :Send to Leave Controller;
+  :Save request in DB;
+  :Show "Leave submitted";
+else (No)
+  :Show validation error;
+endif
+
+stop
+@enduml

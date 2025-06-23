@@ -1,0 +1,33 @@
+@startgantt
+title Final Year Project Timeline Weekly Update (2025)
+
+Project starts the 17th of February 2025
+saturday are closed
+sunday are closed
+printscale weekly
+
+[Proposal Submitted] happens at 17 Feb 2025
+
+[Requirements Gathering] starts at 18 Feb 2025 and lasts 11 days
+[Use Case & UML Diagrams] starts at 1 Mar 2025 and lasts 8 days
+[Database Design] starts at 9 Mar 2025 and lasts 6 days
+[UI/UX Mockups] starts at 9 Mar 2025 and lasts 6 days
+[Frontend Development] starts at 15 Mar 2025 and lasts 13 days
+[Backend Development] starts at 15 Mar 2025 and lasts 13 days
+[Add Extra Child Feature] starts at 28 Mar 2025 and lasts 4 days
+[Testing] starts at 1 Apr 2025 and lasts 6 days
+
+[Final Deployment] starts at 7 Apr 2025 and lasts 5 days
+[Interim Feedback & Adjustments] starts at 12 Apr 2025 and lasts 19 days
+[Optional Feature Additions] starts at 1 May 2025 and lasts 15 days
+[User Testing + Feedback] starts at 16 May 2025 and lasts 16 days
+
+[Final Report & Documentation] starts at 1 Jun 2025 and lasts 20 days
+[Final Review & Submission Prep] starts at 21 Jun 2025 and lasts 25 days
+[Final Submission] happens at 25 Jul 2025
+@endgantt
+
+
+
+
+

@@ -1,0 +1,17 @@
+@startuml
+skinparam linetype ortho
+
+object Teacher
+object "Attendance Page" as UI
+object "Attendance Controller" as Controller
+object "Student Database" as DB
+object "Parent Notification Service" as Notify
+object "Parent Dashboard" as P_Dashboard
+
+Teacher --> UI : mark attendance
+UI --> Controller : submits data
+Controller --> DB : saves attendance
+Controller --> Notify : notifies parents
+Notify --> P_Dashboard : updates dashboard
+
+@enduml
