@@ -177,9 +177,19 @@
         $(document).on('keydown', '#signInForm input', function(e) {
             if (e.which === 13) {
                 e.preventDefault();
-                handleLogin();
+                if (passwordStrength < 4) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Weak Password',
+                        text: 'Please enter a stronger password (use uppercase, numbers, symbols, and at least 8 characters).',
+                        confirmButtonColor: '#d33'
+                    });
+                    return;
+                }
+                handleLogin(); 
             }
         });
+
         //verify the fileds
 
         function handleLogin() {
@@ -210,7 +220,11 @@
                 success: function(response) {
                     if (response.status == 'success') {
                         $('#signInForm')[0].reset();
-                        window.location.href = 'adminDashboard.php';
+                        if (response.type == '' || response.type == null) {
+                            window.location.href = 'adminDashboard.php';
+                        } else {
+                            window.location.href = 'parentsDashboard.php';
+                        }
                     } else {
                         swal.fire({
                             icon: 'error',
@@ -239,21 +253,37 @@
             }
         });
 
+        let passwordStrength = 0;
+
         $('#password').on('input', function() {
             var password = $(this).val();
-            var strength = 0;
+            passwordStrength = 0;
 
-            if (password.length >= 8) strength++;
-            if (/[A-Z]/.test(password)) strength++;
-            if (/[0-9]/.test(password)) strength++;
-            if (/[^A-Za-z0-9]/.test(password)) strength++;
+            if (password.length >= 8) passwordStrength++;
+            if (/[A-Z]/.test(password)) passwordStrength++;
+            if (/[0-9]/.test(password)) passwordStrength++;
+            if (/[^A-Za-z0-9]/.test(password)) passwordStrength++;
 
             var bars = $('[data-kt-password-meter-control="highlight"] > div');
-
             bars.removeClass('bg-active-success');
 
-            for (var i = 0; i < strength; i++) {
+            for (var i = 0; i < passwordStrength; i++) {
                 bars.eq(i).addClass('bg-active-success');
             }
+        });
+
+        // Check strength before allowing sign-in
+        $(document).on('click', '#btnSignIn', function(e) {
+            if (passwordStrength < 4) {
+                e.preventDefault();
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Weak Password',
+                    text: 'Please enter a stronger password (use uppercase, numbers, symbols, and minimum 8 characters).',
+                    confirmButtonColor: '#d33'
+                });
+                return;
+            }
+            handleLogin(); 
         });
     </script>

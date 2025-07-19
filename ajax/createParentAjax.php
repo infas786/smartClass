@@ -22,7 +22,8 @@ if ($action == 'saveParentDetails') {
     $emContact2 = $_POST['emConNum2'];
     $relation2 = $_POST['relationship2'];
     $pId = $_POST['pId'];
-
+    $username = $_POST['username'];
+    $password = $_POST['password'];
     $childFirstName = $_POST['childFirstName'];
     $childDob = $_POST['childDob'];
     $childRid = $_POST['childRid'];
@@ -38,6 +39,7 @@ if ($action == 'saveParentDetails') {
     if (empty($pId)) {
         $parentInsert = $conn->query("INSERT INTO `createparent` (father_name, father_contact, father_occu, mother_name, mother_contact, mother_occu, alt_contact, email, address, state, province, country, em_contName1, em_cont1, relation1, em_contName2, em_cont2, relation2) VALUES ('$fathersFname','$fathersContact','$fathersOccupation','$mothersFname','$mothersContact','$mothersOccupation','$altContact','$email','$address','$state','$province','$country','$emContName','$emContact','$relation','$emContName2','$emContact2','$relation2')");
         $lastParentId = $conn->insert_id;
+        $conn->query("INSERT INTO `system_user` (username, password, user_id, type) VALUES ('$username', '$password', '$lastParentId', 'Parent')");
 
         if ($parentInsert) {
             $response = [
@@ -50,6 +52,7 @@ if ($action == 'saveParentDetails') {
         $updateParent = $conn->query("UPDATE `createparent` SET father_name='$fathersFname', father_contact='$fathersContact', father_occu='$fathersOccupation', mother_name='$mothersFname', mother_contact='$mothersContact', mother_occu='$mothersOccupation', alt_contact='$altContact', 
         email='$email', address='$address', state='$state', province='$province', country='$country', em_contName1='$emContName', em_cont1='$emContact', relation1='$relation', em_contName2='$emContName2', em_cont2='$emContact2', relation2='$relation2' WHERE Id='$pId'");
         $lastParentId = $pId;
+        $conn->query("UPDATE `system_user` SET username = '$username', password = '$password', type = 'Parent' WHERE user_id = '$lastParentId'");
 
         if ($updateParent) {
             $response = [
@@ -126,6 +129,9 @@ if ($action == 'editParent') {
     $getParentQuery = $conn->query("SELECT * FROM `createparent` WHERE Id = '$lastClickedId'");
     $getParentDet = $getParentQuery->fetch_assoc();
 
+      $sql_user = $conn->query("SELECT * from system_user WHERE user_id = '$lastClickedId'");
+  $user = $sql_user->fetch_array();
+
     $getChildQuery = $conn->query("SELECT * FROM `child_association` WHERE pId = '$lastClickedId'");
     $getChildDet = [];
     while ($row = $getChildQuery->fetch_assoc()) {
@@ -135,23 +141,24 @@ if ($action == 'editParent') {
 
     $dataArray = array(
         'parentDet' => $getParentDet,
-        'childDet' => $getChildDet
+        'childDet' => $getChildDet,
+        'user' => $user
     );
     echo json_encode($dataArray);
 }
 
 //Edit Child
 
-if($action == 'editChild'){
+if ($action == 'editChild') {
     $clickedChildId = $_POST['lastClickChild'];
 
     $getChildTableQuery = $conn->query("SELECT * FROM `child_association` WHERE Id = '$clickedChildId'");
     $getlastClickedChild = $getChildTableQuery->fetch_assoc();
 
     $dataArray = [
-        'getChildRow'=> $getlastClickedChild
+        'getChildRow' => $getlastClickedChild
     ];
-echo json_encode($dataArray);
+    echo json_encode($dataArray);
 }
 
 if ($action == 'deleteParent') {
@@ -182,4 +189,3 @@ if ($action == 'deleteParent') {
 
     echo json_encode($dataArray);
 }
-

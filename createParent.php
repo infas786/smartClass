@@ -147,6 +147,14 @@
                     <!-- Parent Details Tab -->
                     <div class="tab-content active" id="parent-details">
                         <div class="row ">
+                            <div class="col-md-6 mb-8">
+                                <label for="joiningDate" class="form-label fw-bold">Username<span style="color: red;">*</span></label>
+                                <input type="text" class="form-control form-control-solid border mandatory" id="username" name="username">
+                            </div>
+                            <div class="col-md-6 mb-8">
+                                <label for="joiningDate" class="form-label fw-bold">Password<span style="color: red;">*</span></label>
+                                <input type="password" class="form-control form-control-solid border mandatory" id="password" name="password">
+                            </div>
                             <div class="col-md-4 mb-6 ">
                                 <label for="fName" class="form-label fw-bold">Father's Full Name<span style="color: red;">*</span></label>
                                 <input type="text" class="form-control form-control-solid border mandatory " id="fName" placeholder="Enter father's Full Name" name="fName" autocomplete="new-password">
@@ -641,6 +649,8 @@
                     $('#state').val(response.parentDet.state);
                     $('#province').val(response.parentDet.province);
                     $('#country').val(response.parentDet.country);
+                    $('#username').val(response.user.username)
+                    $('#password').val(response.user.password)
                 }
 
                 if (response.childDet.length > 0) {

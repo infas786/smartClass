@@ -158,6 +158,10 @@
                                 <label for="tAddress" class="form-label fw-bold">Address<span style="color: red;">*</span></label>
                                 <input type="text" class="form-control form-control-solid border mandatory" id="tAddress" placeholder="Enter address" name="tAddress">
                             </div>
+                            <div class="col-md-12 mb-6">
+                                <label for="tAddress" class="form-label fw-bold">Subjects<span style="color: red;">*</span></label>
+                                <input type="text" class="form-control form-control-solid border mandatory" id="tSubject" placeholder="Enter address" name="tSubject">
+                            </div>
                             <div class="col-md-6 mb-6">
                                 <label for="gender" class="form-label fw-bold">Gender<span style="color: red;">*</span></label>
                                 <select class="form-control form-control-solid border mandatory" id="gender" name="gender">
@@ -171,6 +175,14 @@
                             <div class="col-md-6 mb-8">
                                 <label for="joiningDate" class="form-label fw-bold">Joining Date<span style="color: red;">*</span></label>
                                 <input type="date" class="form-control form-control-solid border mandatory" id="joiningDate" name="joiningDate">
+                            </div>
+                            <div class="col-md-6 mb-8">
+                                <label for="joiningDate" class="form-label fw-bold">Username<span style="color: red;">*</span></label>
+                                <input type="text" class="form-control form-control-solid border mandatory" id="username" name="username">
+                            </div>
+                            <div class="col-md-6 mb-8">
+                                <label for="joiningDate" class="form-label fw-bold">Password<span style="color: red;">*</span></label>
+                                <input type="password" class="form-control form-control-solid border mandatory" id="password" name="password">
                             </div>
                         </div>
                     </div>
@@ -238,7 +250,8 @@
         });
     });
 
-loadTeacherTable()
+    loadTeacherTable()
+
     function loadTeacherTable() {
         $(document).ready(function() {
             $.ajax({
@@ -259,7 +272,7 @@ loadTeacherTable()
                             rows += '<td>' + data.email + '</td>';
                             rows += '<td>';
                             rows += '<span style="cursor:pointer; margin-right:10px;"><i class="fa fa-edit editBtn" editAttr="' + data.Id + '"></i></span>';
-                            rows += '<span style="cursor:pointer;"><i class="fa fa-trash deleteBtn" deleteAttr = "'+data.Id+'"></i></span>';
+                            rows += '<span style="cursor:pointer;"><i class="fa fa-trash deleteBtn" deleteAttr = "' + data.Id + '"></i></span>';
                             rows += '</td>';
                             rows += '</tr>';
                         });
@@ -296,6 +309,10 @@ loadTeacherTable()
                     $('#tAddress').val(teacher.address);
                     $('#gender').val(teacher.gender);
                     $('#joiningDate').val(teacher.join_date);
+                    $('#tSubject').val(teacher.tSubject)
+                    $('#username').val(response.user.username);
+                    $('#password').val(response.user.password);
+
                 } else {
                     alert("No teacher data found!");
                 }
@@ -303,20 +320,20 @@ loadTeacherTable()
         });
     });
 
-    $(document).on('click','.deleteBtn',function(){
+    $(document).on('click', '.deleteBtn', function() {
         var clickId = $(this).attr('deleteAttr');
         alert(clickId);
 
         $.ajax({
             method: "POST",
-            url:"ajax/createTeacherAjax.php",
-            data:{
-                action:'deleteTeacher',
-                delClickId:clickId
+            url: "ajax/createTeacherAjax.php",
+            data: {
+                action: 'deleteTeacher',
+                delClickId: clickId
             },
-            dataType:"json",
-            success:function(response){
-                if(response.sccess == 200){
+            dataType: "json",
+            success: function(response) {
+                if (response.sccess == 200) {
                     Swal.fire({
                         icon: 'success',
                         title: 'Success',
@@ -324,7 +341,7 @@ loadTeacherTable()
                         confirmButtonColor: '#3085d6'
                     });
 
-                }else{
+                } else {
                     Swal.fire({
                         icon: 'error',
                         title: 'Error',

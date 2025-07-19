@@ -185,6 +185,47 @@
             </div>
         </div>
     </div>
+    <div class="modal" id="assignModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Assign Teacher</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="timeHidden" name="timeHidden">
+                    <input type="hidden" id="slotHidden" name="slotHidden">
+                    <input type="text" name="timeVal" id="timeVal">
+                    <input type="text" name="dayVal" id="dayVal">
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label for="select-teacher">Select Teacher</label>
+                            <select name="tSelect" id="tSelect" class="form-control tSelect">
+                                <option value=""></option>
+                                <?php
+                                $sql_teacher = $conn->query("SELECT * FROM create_teacher");
+                                while ($teacher = $sql_teacher->fetch_array()) {
+                                    echo '<option value="' . $teacher['Id'] . '">' . $teacher['f_name'] . ' ' . $teacher['l_name'] . '</option>';
+                                }
+                                ?>
+                            </select>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label for="select-teacher">Subject</label>
+                            <select name="aSubject" id="aSubject" class="form-control aSubject">
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary assign" id="assign">Assign Teacher</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script>
         const timetable = [{
@@ -303,11 +344,8 @@
             });
         })
 
-        $(document).on('click', '.findBtn', function() {
-            $('#timeTable').html('')
-            var grade = $('#grade').val();
-            var section = $('#section').val();
-            var tableYear = $('#tableYear').val();
+        function fetchTimeTable(grade, section, year) {
+            $('#timeTable').html('');
 
             $.ajax({
                 type: "POST",
@@ -316,23 +354,104 @@
                     'action': 'showAction',
                     'grade': grade,
                     'section': section,
-                    'year': tableYear
+                    'year': year
                 },
                 dataType: "json",
                 success: function(res) {
                     $('#timeTable').append(res.html);
+                }
+            });
+        }
+
+        // Attach it to button click
+        $(document).on('click', '.findBtn', function() {
+            const grade = $('#grade').val();
+            const section = $('#section').val();
+            const year = $('#tableYear').val();
+
+            fetchTimeTable(grade, section, year);
+        });
+
+
+        $(document).on('click', '.period1', function() {
+            var timing = $(this).attr('timing')
+            var timeVal = $(this).attr('timeVal')
+            var dayVal = $(this).attr('dayVal')
+
+            $('#assignModal').modal('show')
+            $('#timeHidden').val(timing)
+            $('#timeVal').val(timeVal)
+            $('#dayVal').val(dayVal)
+
+        });
+
+        $(document).on('change', '#tSelect', function() {
+            var thisID = $(this).val();
+
+            $.ajax({
+                type: "POST",
+                url: "ajax/teacherAssignAjax.php",
+                data: {
+                    action: 'sChange',
+                    'thisId': thisID
+                },
+                dataType: "json",
+                success: function(res) {
+                    $('#aSubject').html(``)
+                    var eachSubject = res.split(',');
+                    eachSubject.forEach(function(each) {
+                        $('#aSubject').append(`<option value="` + each + `">` + each + `</option>`)
+                    });
+
 
                 }
             });
 
         });
 
-        $(document).on('click', '.period1', function () {
-            var timing = $(this).attr('timing')
-            var date1 = $(this).attr('date1')
-            alert(timing)
-            alert(date1)
-            
+        $(document).on('click', '#assign', function() {
+            var time = $('#timeHidden').val()
+            var teacherId = $('#tSelect').val()
+            var tSubject = $('#aSubject').val()
+            const grade = $('#grade').val();
+            const section = $('#section').val();
+            const year = $('#tableYear').val();
+
+            const timeVal = $('#timeVal').val()
+            const dayVal = $('#dayVal').val()
+
+            $.ajax({
+                type: "POST",
+                url: "ajax/teacherAssignAjax.php",
+                data: {
+                    'action': 'aetTeacher',
+                    'time': time,
+                    'teacherId': teacherId,
+                    'tSubject': tSubject,
+                    'timeVal': timeVal,
+                    'dayVal': dayVal
+                },
+                dataType: "json",
+                success: function(res) {
+                    if (res.status == 200) {
+                        $('#assignModal').modal('hide')
+                        fetchTimeTable(grade, section, year);
+
+                    } else {
+                        Swal.fire({
+                            title: 'Oops!',
+                            text: res.message,
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#d33',
+                            cancelButtonColor: '#3085d6'                        });
+
+
+                    }
+
+                }
+            });
+
         });
     </script>
     <?php include('footer.php')  ?>
